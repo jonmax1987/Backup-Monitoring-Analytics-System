@@ -103,6 +103,12 @@ The format follows Keep a Changelog principles.
 - Mock data support for testing (CORE-009)
 - Dashboard validation script (CORE-009)
 - Dashboard README with usage instructions (CORE-009)
+- End-to-End Validation (CORE-010)
+- End-to-end tests for full pipeline (load -> classify -> process -> compare -> detect -> report) (CORE-010)
+- E2E validation of report formats (JSON, CSV, HTML) (CORE-010)
+- E2E validation of Integration Layer / dashboard output (CORE-010)
+- Deterministic output test (same input -> same structure) (CORE-010)
+- Standalone validate_e2e.py script for CORE-010 (CORE-010)
 
 ### Changed
 - Added jsonschema and pytz to requirements.txt (CORE-002)
