@@ -13,7 +13,7 @@ Phase 1 – Core System Implementation
 | CORE-004 | Processing Engine | DONE | 2026-02-05 | Processing engine implemented with daily/weekly/monthly aggregates, duration calculations, status counting, comprehensive tests |
 | CORE-005 | Historical Comparison Module | DONE | 2026-02-05 | Historical comparison implemented with daily/weekly/monthly comparisons, delta calculations, comprehensive tests |
 | CORE-006 | Anomaly Detection Engine | DONE | 2026-02-05 | Rule-based anomaly detection implemented with duration/count/rate detection, severity levels, comprehensive tests |
-| CORE-007 | Report Generator | TODO | — | — |
+| CORE-007 | Report Generator | DONE | 2026-02-05 | Report generator implemented with JSON/CSV/HTML formats, daily/period/comparison reports, comprehensive tests |
 | CORE-008 | Integration Layer | TODO | — | — |
 | CORE-009 | Basic Dashboard (UI) | TODO | — | — |
 | CORE-010 | End-to-End Validation | TODO | — | — |
