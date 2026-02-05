@@ -36,7 +36,7 @@ def sample_daily_metrics():
         period_end=base_date,
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=base_date,
+        period_period_date=base_date,
         average_duration=1800.0,  # 30 minutes
         max_duration=3600.0,  # 1 hour
         min_duration=900.0,  # 15 minutes
@@ -52,7 +52,7 @@ def sample_daily_metrics():
         period_end=base_date - timedelta(days=1),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=base_date - timedelta(days=1),
+        period_period_date=base_date - timedelta(days=1),
         average_duration=1500.0,  # 25 minutes
         max_duration=3000.0,  # 50 minutes
         min_duration=600.0,  # 10 minutes
@@ -279,7 +279,7 @@ def test_percentage_delta_zero_previous(comparator):
         period_end=date(2024, 1, 2),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 2),
+        period_date=date(2024, 1, 2),
         average_duration=1800.0,
         max_duration=3600.0,
         min_duration=900.0,
@@ -295,7 +295,7 @@ def test_percentage_delta_zero_previous(comparator):
         period_end=date(2024, 1, 1),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 1),
+        period_date=date(2024, 1, 1),
         average_duration=0.0,
         max_duration=0.0,
         min_duration=0.0,
@@ -320,7 +320,7 @@ def test_percentage_delta_both_zero(comparator):
         period_end=date(2024, 1, 2),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 2),
+        period_date=date(2024, 1, 2),
         average_duration=0.0,
         max_duration=0.0,
         min_duration=0.0,
@@ -336,7 +336,7 @@ def test_percentage_delta_both_zero(comparator):
         period_end=date(2024, 1, 1),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 1),
+        period_date=date(2024, 1, 1),
         average_duration=0.0,
         max_duration=0.0,
         min_duration=0.0,
@@ -364,7 +364,7 @@ def test_compare_multiple_periods(comparator):
             period_end=d,
             period_type=PeriodType.DAY,
             backup_type="database",
-            date=d,
+            period_date=d,
             average_duration=1000.0 * (i + 1),  # Increasing
             max_duration=2000.0 * (i + 1),
             min_duration=500.0 * (i + 1),
@@ -399,7 +399,7 @@ def test_compare_multiple_periods_single(comparator):
             period_end=date(2024, 1, 1),
             period_type=PeriodType.DAY,
             backup_type="database",
-            date=date(2024, 1, 1),
+            period_date=date(2024, 1, 1),
             average_duration=1800.0,
             max_duration=3600.0,
             min_duration=900.0,
@@ -431,7 +431,7 @@ def test_compare_multiple_periods_different_backup_types(comparator):
             period_end=date(2024, 1, 1),
             period_type=PeriodType.DAY,
             backup_type="database",
-            date=date(2024, 1, 1),
+            period_date=date(2024, 1, 1),
             average_duration=1800.0,
             max_duration=3600.0,
             min_duration=900.0,
@@ -446,7 +446,7 @@ def test_compare_multiple_periods_different_backup_types(comparator):
             period_end=date(2024, 1, 2),
             period_type=PeriodType.DAY,
             backup_type="filesystem",  # Different backup type
-            date=date(2024, 1, 2),
+            period_date=date(2024, 1, 2),
             average_duration=1800.0,
             max_duration=3600.0,
             min_duration=900.0,

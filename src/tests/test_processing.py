@@ -73,12 +73,12 @@ def test_compute_daily_aggregates(processor, sample_records):
     assert len(daily_metrics) > 0
     
     # Check that we have metrics for each day/type combination
-    dates = {m.date for m in daily_metrics}
+    dates = {m.period_date for m in daily_metrics}
     assert date(2024, 1, 1) in dates
     assert date(2024, 1, 2) in dates
     
     # Check database metrics for day 1
-    day1_db = next((m for m in daily_metrics if m.date == date(2024, 1, 1) and m.backup_type == "database"), None)
+    day1_db = next((m for m in daily_metrics if m.period_date == date(2024, 1, 1) and m.backup_type == "database"), None)
     assert day1_db is not None
     assert day1_db.total_count == 2
     assert day1_db.success_count == 2
@@ -93,7 +93,7 @@ def test_compute_daily_aggregates_specific_date(processor, sample_records):
     daily_metrics = processor.compute_daily_aggregates(sample_records, target_date=target_date)
     
     # Should only have metrics for the target date
-    assert all(m.date == target_date for m in daily_metrics)
+    assert all(m.period_date == target_date for m in daily_metrics)
     assert len(daily_metrics) == 2  # database and filesystem
 
 

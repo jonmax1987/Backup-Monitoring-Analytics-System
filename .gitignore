@@ -52,3 +52,7 @@ config/local.yaml
 *.db
 *.sqlite
 reports/output/
+
+# Data files (keep directory structure)
+data/*.json
+!data/README.md

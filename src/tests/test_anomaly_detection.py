@@ -35,7 +35,7 @@ def historical_metrics():
             period_end=base_date + timedelta(days=i),
             period_type=PeriodType.DAY,
             backup_type="database",
-            date=base_date + timedelta(days=i),
+            period_date=base_date + timedelta(days=i),
             average_duration=1800.0,  # 30 minutes
             max_duration=3600.0,  # 1 hour
             min_duration=900.0,  # 15 minutes
@@ -57,7 +57,7 @@ def current_metrics_normal():
         period_end=date(2024, 1, 8),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 8),
+        period_date=date(2024, 1, 8),
         average_duration=1900.0,  # Slightly above average but within threshold
         max_duration=3700.0,
         min_duration=950.0,
@@ -77,7 +77,7 @@ def current_metrics_anomalous():
         period_end=date(2024, 1, 8),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 8),
+        period_date=date(2024, 1, 8),
         average_duration=5000.0,  # Much higher than average (threshold is 2x = 3600)
         max_duration=8000.0,
         min_duration=2000.0,
@@ -122,7 +122,7 @@ def test_detect_anomalies_duration_low(detector, historical_metrics):
         period_end=date(2024, 1, 8),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 8),
+        period_date=date(2024, 1, 8),
         average_duration=500.0,  # Much lower than average (threshold is 0.5x = 900)
         max_duration=1000.0,
         min_duration=200.0,
@@ -180,7 +180,7 @@ def test_detect_anomalies_insufficient_samples(detector, current_metrics_normal)
             period_end=date(2024, 1, i),
             period_type=PeriodType.DAY,
             backup_type="database",
-            date=date(2024, 1, i),
+            period_date=date(2024, 1, i),
             average_duration=1800.0,
             max_duration=3600.0,
             min_duration=900.0,
@@ -215,7 +215,7 @@ def test_detect_anomalies_different_backup_type(detector, current_metrics_normal
         period_end=date(2024, 1, 8),
         period_type=PeriodType.DAY,
         backup_type="filesystem",  # Different backup type
-        date=date(2024, 1, 8),
+        period_date=date(2024, 1, 8),
         average_duration=5000.0,  # Would be anomaly if same type
         max_duration=8000.0,
         min_duration=2000.0,
@@ -240,7 +240,7 @@ def test_detect_anomalies_max_duration(detector, historical_metrics):
         period_end=date(2024, 1, 8),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 8),
+        period_date=date(2024, 1, 8),
         average_duration=1800.0,  # Normal average
         max_duration=8000.0,  # Very high max (threshold is 2x = 7200)
         min_duration=900.0,
@@ -266,7 +266,7 @@ def test_detect_anomalies_success_rate_low(detector, historical_metrics):
         period_end=date(2024, 1, 8),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 8),
+        period_date=date(2024, 1, 8),
         average_duration=1800.0,
         max_duration=3600.0,
         min_duration=900.0,
@@ -294,7 +294,7 @@ def test_severity_calculation(detector, historical_metrics):
         period_end=date(2024, 1, 8),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 8),
+        period_date=date(2024, 1, 8),
         average_duration=6000.0,  # 233% increase
         max_duration=8000.0,
         min_duration=2000.0,
@@ -321,7 +321,7 @@ def test_detect_batch(detector, historical_metrics):
             period_end=date(2024, 1, 8),
             period_type=PeriodType.DAY,
             backup_type="database",
-            date=date(2024, 1, 8),
+            period_date=date(2024, 1, 8),
             average_duration=5000.0,  # Anomalous
             max_duration=8000.0,
             min_duration=2000.0,
@@ -399,7 +399,7 @@ def test_anomaly_detection_result_properties():
         period_end=date(2024, 1, 8),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 8),
+        period_date=date(2024, 1, 8),
         average_duration=5000.0,
         max_duration=8000.0,
         min_duration=2000.0,
@@ -432,7 +432,7 @@ def test_lookback_periods_limit(detector, historical_metrics):
             period_end=date(2024, 1, i),
             period_type=PeriodType.DAY,
             backup_type="database",
-            date=date(2024, 1, i),
+            period_date=date(2024, 1, i),
             average_duration=1800.0,
             max_duration=3600.0,
             min_duration=900.0,
@@ -450,7 +450,7 @@ def test_lookback_periods_limit(detector, historical_metrics):
         period_end=date(2024, 1, 15),
         period_type=PeriodType.DAY,
         backup_type="database",
-        date=date(2024, 1, 15),
+        period_date=date(2024, 1, 15),
         average_duration=5000.0,
         max_duration=8000.0,
         min_duration=2000.0,

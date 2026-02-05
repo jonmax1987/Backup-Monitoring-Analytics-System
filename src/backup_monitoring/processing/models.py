@@ -55,7 +55,7 @@ class AggregatedMetrics(BaseModel):
 class DailyMetrics(AggregatedMetrics):
     """Daily aggregated metrics."""
     period_type: PeriodType = Field(default=PeriodType.DAY, description="Period type is day")
-    date: date = Field(..., description="Date of the aggregation")
+    period_date: date = Field(..., description="Date of the aggregation")
 
 
 class WeeklyMetrics(AggregatedMetrics):

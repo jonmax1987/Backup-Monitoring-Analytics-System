@@ -208,7 +208,7 @@ class ReportGenerator:
         
         # Add period-specific fields
         if isinstance(metric, DailyMetrics):
-            base["date"] = metric.date.isoformat()
+            base["date"] = metric.period_date.isoformat()
         elif isinstance(metric, WeeklyMetrics):
             base["week_start"] = metric.week_start.isoformat()
             base["week_end"] = metric.week_end.isoformat()

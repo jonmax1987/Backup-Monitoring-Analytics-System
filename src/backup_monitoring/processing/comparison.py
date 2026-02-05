@@ -95,13 +95,13 @@ class HistoricalComparator:
         """
         if previous is None:
             # Find previous day
-            previous_date = current.date - timedelta(days=1)
+            previous_date = current.period_date - timedelta(days=1)
             previous = DailyMetrics(
                 period_start=previous_date,
                 period_end=previous_date,
                 period_type=PeriodType.DAY,
                 backup_type=current.backup_type,
-                date=previous_date,
+                period_date=previous_date,
                 average_duration=0.0,
                 max_duration=0.0,
                 min_duration=0.0,

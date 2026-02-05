@@ -80,11 +80,11 @@ class ProcessingEngine:
             
             daily_metric = DailyMetrics(
                 **metrics.model_dump(),
-                date=record_date
+                period_date=record_date
             )
             daily_metrics.append(daily_metric)
         
-        return sorted(daily_metrics, key=lambda x: (x.date, x.backup_type))
+        return sorted(daily_metrics, key=lambda x: (x.period_date, x.backup_type))
     
     def compute_weekly_aggregates(
         self,
