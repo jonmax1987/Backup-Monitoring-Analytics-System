@@ -107,9 +107,9 @@ class StandardDataAdapter(DataAdapter):
         
         # Apply filters
         if start_date:
-            metrics = [m for m in metrics if m.date >= start_date]
+            metrics = [m for m in metrics if m.period_date >= start_date]
         if end_date:
-            metrics = [m for m in metrics if m.date <= end_date]
+            metrics = [m for m in metrics if m.period_date <= end_date]
         if backup_type:
             metrics = [m for m in metrics if m.backup_type == backup_type]
         

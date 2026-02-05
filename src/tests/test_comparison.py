@@ -36,7 +36,7 @@ def sample_daily_metrics():
         period_end=base_date,
         period_type=PeriodType.DAY,
         backup_type="database",
-        period_period_date=base_date,
+        period_date=base_date,
         average_duration=1800.0,  # 30 minutes
         max_duration=3600.0,  # 1 hour
         min_duration=900.0,  # 15 minutes
@@ -52,7 +52,7 @@ def sample_daily_metrics():
         period_end=base_date - timedelta(days=1),
         period_type=PeriodType.DAY,
         backup_type="database",
-        period_period_date=base_date - timedelta(days=1),
+        period_date=base_date - timedelta(days=1),
         average_duration=1500.0,  # 25 minutes
         max_duration=3000.0,  # 50 minutes
         min_duration=600.0,  # 10 minutes

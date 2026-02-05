@@ -47,7 +47,7 @@ def sample_daily_metrics():
             period_end=date(2024, 1, i + 1),
             period_type=PeriodType.DAY,
             backup_type="database",
-            date=date(2024, 1, i + 1),
+            period_date=date(2024, 1, i + 1),
             average_duration=1800.0,
             max_duration=3600.0,
             min_duration=900.0,
