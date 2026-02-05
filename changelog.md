@@ -92,6 +92,17 @@ The format follows Keep a Changelog principles.
 - Support for filtering by date range, backup type, period type (CORE-008)
 - Decoupled architecture - no coupling to core logic (CORE-008)
 - Comprehensive unit tests for integration layer (CORE-008)
+- Basic Dashboard UI with HTML/JavaScript (CORE-009)
+- Dashboard API server using Integration Layer (CORE-009)
+- Summary statistics display (total backups, success rate, failures, anomalies) (CORE-009)
+- Metrics table with filtering (CORE-009)
+- Anomalies table with severity badges (CORE-009)
+- Filtering by date range, backup type, and status (CORE-009)
+- Responsive design with modern UI (CORE-009)
+- Integration Layer compliance - UI consumes data only via adapters (CORE-009)
+- Mock data support for testing (CORE-009)
+- Dashboard validation script (CORE-009)
+- Dashboard README with usage instructions (CORE-009)
 
 ### Changed
 - Added jsonschema and pytz to requirements.txt (CORE-002)

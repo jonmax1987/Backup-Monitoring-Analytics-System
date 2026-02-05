@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backup Monitoring Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .filters {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .filter-group input,
+        .filter-group select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .filter-group input:focus,
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 8px 20px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5568d3;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .stat-value.success {
+            color: #4caf50;
+        }
+
+        .stat-value.warning {
+            color: #ff9800;
+        }
+
+        .stat-value.error {
+            color: #f44336;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .chart-container h2 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #555;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .anomaly-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .anomaly-critical {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .anomaly-high {
+            background-color: #ff9800;
+            color: white;
+        }
+
+        .anomaly-medium {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        .anomaly-low {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .error {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Backup Monitoring Dashboard</h1>
+        <p>Real-time backup monitoring and analytics</p>
+    </div>
+
+    <div class="container">
+        <div class="filters">
+            <div class="filter-group">
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate">
+            </div>
+            <div class="filter-group">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate">
+            </div>
+            <div class="filter-group">
+                <label for="backupType">Backup Type</label>
+                <select id="backupType">
+                    <option value="">All Types</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="status">Status</label>
+                <select id="status">
+                    <option value="">All Statuses</option>
+                    <option value="success">Success</option>
+                    <option value="failure">Failure</option>
+                    <option value="partial">Partial</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <button id="applyFilters" onclick="applyFilters()">Apply Filters</button>
+            </div>
+            <div class="filter-group">
+                <button id="resetFilters" onclick="resetFilters()">Reset</button>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error" style="display: none;"></div>
+
+        <div id="dashboardContent">
+            <div class="loading">Loading dashboard data...</div>
+        </div>
+    </div>
+
+    <script>
+        // Dashboard state
+        let dashboardData = null;
+        let filteredData = null;
+
+        // Initialize dashboard
+        async function initDashboard() {
+            try {
+                // In a real implementation, this would fetch from the Integration Layer API
+                // For now, we'll use mock data or load from a JSON endpoint
+                await loadDashboardData();
+                renderDashboard();
+            } catch (error) {
+                showError('Failed to load dashboard data: ' + error.message);
+            }
+        }
+
+        async function loadDashboardData() {
+            // This would typically call an API endpoint that uses the Integration Layer
+            // For Phase 1, we'll create a simple data structure
+            // In production, this would be: const response = await fetch('/api/dashboard');
+            
+            // Mock data structure - in real implementation, this comes from Integration Layer
+            dashboardData = {
+                summary: {
+                    total_backups: 0,
+                    total_success: 0,
+                    total_failure: 0,
+                    success_rate: 0,
+                    total_anomalies: 0,
+                    critical_anomalies: 0,
+                    backup_types: [],
+                    date_range: { start: null, end: null }
+                },
+                metrics: [],
+                anomalies: [],
+                comparisons: []
+            };
+
+            // Try to load from API if available
+            try {
+                const response = await fetch('/api/dashboard');
+                if (response.ok) {
+                    dashboardData = await response.json();
+                }
+            } catch (e) {
+                console.log('API not available, using mock data');
+            }
+
+            filteredData = dashboardData;
+        }
+
+        function renderDashboard() {
+            const content = document.getElementById('dashboardContent');
+            
+            if (!filteredData) {
+                content.innerHTML = '<div class="empty-state">No data available</div>';
+                return;
+            }
+
+            const summary = filteredData.summary || {};
+            
+            // Populate backup types dropdown
+            const backupTypeSelect = document.getElementById('backupType');
+            backupTypeSelect.innerHTML = '<option value="">All Types</option>';
+            (summary.backup_types || []).forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                backupTypeSelect.appendChild(option);
+            });
+
+            // Set date range inputs
+            if (summary.date_range) {
+                if (summary.date_range.start) {
+                    document.getElementById('startDate').value = summary.date_range.start;
+                }
+                if (summary.date_range.end) {
+                    document.getElementById('endDate').value = summary.date_range.end;
+                }
+            }
+
+            let html = `
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h2>Summary</h2>
+                        <div class="stat">
+                            <span class="stat-label">Total Backups</span>
+                            <span class="stat-value">${summary.total_backups || 0}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Success Rate</span>
+                            <span class="stat-value success">${(summary.success_rate || 0).toFixed(1)}%</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Total Success</span>
+                            <span class="stat-value success">${summary.total_success || 0}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Total Failures</span>
+                            <span class="stat-value error">${summary.total_failure || 0}</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Anomalies</h2>
+                        <div class="stat">
+                            <span class="stat-label">Total Anomalies</span>
+                            <span class="stat-value warning">${summary.total_anomalies || 0}</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Critical</span>
+                            <span class="stat-value error">${summary.critical_anomalies || 0}</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Backup Types</h2>
+                        <div class="stat">
+                            <span class="stat-label">Types Monitored</span>
+                            <span class="stat-value">${(summary.backup_types || []).length}</span>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            ${(summary.backup_types || []).map(type => 
+                                `<span style="display: inline-block; padding: 4px 8px; margin: 2px; background: #e3f2fd; border-radius: 4px; font-size: 12px;">${type}</span>`
+                            ).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Add metrics table
+            if (filteredData.metrics && filteredData.metrics.length > 0) {
+                html += `
+                    <div class="table-container">
+                        <h2>Metrics</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Backup Type</th>
+                                    <th>Total Count</th>
+                                    <th>Success</th>
+                                    <th>Failure</th>
+                                    <th>Avg Duration (s)</th>
+                                    <th>Success Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${filteredData.metrics.map(metric => `
+                                    <tr>
+                                        <td>${metric.date || metric.period_start || ''}</td>
+                                        <td>${metric.backup_type || ''}</td>
+                                        <td>${metric.total_count || 0}</td>
+                                        <td>${metric.success_count || 0}</td>
+                                        <td>${metric.failure_count || 0}</td>
+                                        <td>${(metric.average_duration || 0).toFixed(2)}</td>
+                                        <td>${(metric.success_rate || 0).toFixed(1)}%</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Add anomalies table
+            if (filteredData.anomalies && filteredData.anomalies.length > 0) {
+                html += `
+                    <div class="table-container">
+                        <h2>Anomalies</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th>Backup Type</th>
+                                    <th>Anomaly Count</th>
+                                    <th>Critical</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${filteredData.anomalies.filter(a => a.has_anomaly).map(anomaly => `
+                                    <tr>
+                                        <td>${anomaly.period_start || ''} to ${anomaly.period_end || ''}</td>
+                                        <td>${anomaly.backup_type || ''}</td>
+                                        <td>${anomaly.anomaly_count || 0}</td>
+                                        <td>${anomaly.critical_anomalies || 0}</td>
+                                        <td>
+                                            ${(anomaly.anomalies || []).map(a => `
+                                                <span class="anomaly-badge anomaly-${a.severity || 'low'}">
+                                                    ${a.metric_name}: ${a.deviation_percentage.toFixed(1)}%
+                                                </span>
+                                            `).join(' ')}
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Add empty state if no data
+            if (!filteredData.metrics || filteredData.metrics.length === 0) {
+                html += '<div class="empty-state">No metrics data available</div>';
+            }
+
+            content.innerHTML = html;
+        }
+
+        function applyFilters() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const backupType = document.getElementById('backupType').value;
+            const status = document.getElementById('status').value;
+
+            // Filter data (in real implementation, this would be done server-side via API)
+            filteredData = {
+                ...dashboardData,
+                metrics: (dashboardData.metrics || []).filter(m => {
+                    if (startDate && m.date < startDate) return false;
+                    if (endDate && m.date > endDate) return false;
+                    if (backupType && m.backup_type !== backupType) return false;
+                    return true;
+                }),
+                anomalies: (dashboardData.anomalies || []).filter(a => {
+                    if (backupType && a.backup_type !== backupType) return false;
+                    return true;
+                })
+            };
+
+            renderDashboard();
+        }
+
+        function resetFilters() {
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            document.getElementById('backupType').value = '';
+            document.getElementById('status').value = '';
+            filteredData = dashboardData;
+            renderDashboard();
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>
