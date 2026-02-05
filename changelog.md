@@ -32,6 +32,17 @@ The format follows Keep a Changelog principles.
 - Batch classification support (CORE-003)
 - Comprehensive unit tests for classifier (CORE-003)
 - Enhanced classification_rules.yaml with more examples (CORE-003)
+- Processing Engine for computing aggregates and metrics (CORE-004)
+- AggregatedMetrics model with duration and count metrics (CORE-004)
+- DailyMetrics, WeeklyMetrics, MonthlyMetrics models (CORE-004)
+- Daily aggregation by date and backup type (CORE-004)
+- Weekly aggregation with week start/end calculation (CORE-004)
+- Monthly aggregation with proper month boundary handling (CORE-004)
+- Duration calculations (average, min, max, total) (CORE-004)
+- Status counting (success, failure, partial) with rate calculations (CORE-004)
+- Support for filtering by specific date/week/month (CORE-004)
+- compute_all_aggregates method for batch processing (CORE-004)
+- Comprehensive unit tests for processing engine (CORE-004)
 
 ### Changed
 - Added jsonschema and pytz to requirements.txt (CORE-002)
