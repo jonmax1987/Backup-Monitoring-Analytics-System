@@ -23,9 +23,19 @@ The format follows Keep a Changelog principles.
 - Timestamp normalization supporting multiple formats (CORE-002)
 - Comprehensive unit tests for JSON loader (CORE-002)
 - Sample backup data file for testing (CORE-002)
+- Backup Classification Layer with rule-based system (CORE-003)
+- ClassificationRule and Condition models with multiple operators (CORE-003)
+- RuleEvaluator for evaluating classification rules (CORE-003)
+- Support for nested field access (dot notation) (CORE-003)
+- Operators: equals, contains, starts_with, ends_with, regex, in, not_equals, not_contains (CORE-003)
+- Case-sensitive and case-insensitive string matching (CORE-003)
+- Batch classification support (CORE-003)
+- Comprehensive unit tests for classifier (CORE-003)
+- Enhanced classification_rules.yaml with more examples (CORE-003)
 
 ### Changed
 - Added jsonschema and pytz to requirements.txt (CORE-002)
+- Updated classification_rules.yaml with expanded rule examples (CORE-003)
 
 ### Fixed
 - —

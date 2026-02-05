@@ -1,21 +1,45 @@
 # Backup Classification Rules
 # This file defines how raw backup metadata is classified into logical backup types
+# Rules are evaluated in order, and the first matching rule's backup_type is used
 
 rules:
-  # Example rules - to be expanded in CORE-003
+  # Database backup classification
   - name: "database_backup"
     conditions:
       - field: "source_system"
         operator: "contains"
         value: "database"
+        case_sensitive: false
     backup_type: "database"
   
+  # File system backup classification
   - name: "file_system_backup"
     conditions:
       - field: "source_system"
         operator: "contains"
         value: "filesystem"
+        case_sensitive: false
     backup_type: "filesystem"
   
+  # VM backup classification
+  - name: "vm_backup"
+    conditions:
+      - field: "source_system"
+        operator: "contains"
+        value: "vm"
+        case_sensitive: false
+    backup_type: "virtual_machine"
+  
+  # Application backup classification
+  - name: "app_backup"
+    conditions:
+      - field: "source_system"
+        operator: "contains"
+        value: "app"
+        case_sensitive: false
+    backup_type: "application"
+  
+  # Default rule (no conditions - matches everything)
   - name: "default"
+    conditions: []
     backup_type: "unknown"
