@@ -1,0 +1,50 @@
+# Backup Monitoring System Configuration
+
+# Application settings
+app:
+  name: "Backup Monitoring System"
+  version: "1.0.0"
+  log_level: "INFO"
+  log_file: "logs/backup_monitoring.log"
+
+# Data loading settings
+data_loader:
+  json_schema_path: "config/json_schema.json"
+  default_timezone: "UTC"
+  date_format: "%Y-%m-%d %H:%M:%S"
+
+# Classification settings
+classifier:
+  rules_file: "config/classification_rules.yaml"
+  default_backup_type: "unknown"
+
+# Processing settings
+processing:
+  aggregation_periods:
+    - "day"
+    - "week"
+    - "month"
+  duration_unit: "seconds"
+
+# Anomaly detection settings
+anomaly_detection:
+  enabled: true
+  threshold_multiplier: 2.0  # Flag as anomaly if > 2x average
+  min_samples: 5  # Minimum samples needed for comparison
+  lookback_periods: 7  # Number of periods to look back
+
+# Reporting settings
+reporting:
+  output_directory: "reports/output"
+  formats:
+    - "json"
+    - "csv"
+    - "html"
+  date_format: "%Y-%m-%d"
+
+# Integration layer settings
+integration:
+  api_enabled: false
+  api_port: 8000
+  prometheus_enabled: false
+  prometheus_port: 9090

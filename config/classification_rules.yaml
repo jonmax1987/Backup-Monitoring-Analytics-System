@@ -1,0 +1,21 @@
+# Backup Classification Rules
+# This file defines how raw backup metadata is classified into logical backup types
+
+rules:
+  # Example rules - to be expanded in CORE-003
+  - name: "database_backup"
+    conditions:
+      - field: "source_system"
+        operator: "contains"
+        value: "database"
+    backup_type: "database"
+  
+  - name: "file_system_backup"
+    conditions:
+      - field: "source_system"
+        operator: "contains"
+        value: "filesystem"
+    backup_type: "filesystem"
+  
+  - name: "default"
+    backup_type: "unknown"

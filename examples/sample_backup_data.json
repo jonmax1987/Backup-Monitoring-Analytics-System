@@ -1,0 +1,38 @@
+[
+  {
+    "backup_id": "backup-2024-01-01-001",
+    "start_time": "2024-01-01T10:00:00Z",
+    "end_time": "2024-01-01T10:30:00Z",
+    "status": "success",
+    "source_system": "database-primary",
+    "backup_type": "database",
+    "metadata": {
+      "database_name": "production_db",
+      "backup_size_gb": 50,
+      "compression": "gzip"
+    }
+  },
+  {
+    "backup_id": "backup-2024-01-01-002",
+    "start_time": "2024-01-01T14:00:00Z",
+    "end_time": "2024-01-01T14:45:00Z",
+    "status": "success",
+    "source_system": "filesystem-storage",
+    "backup_type": "filesystem",
+    "metadata": {
+      "path": "/var/backups",
+      "files_count": 1250
+    }
+  },
+  {
+    "backup_id": "backup-2024-01-01-003",
+    "start_time": "2024-01-01T18:00:00Z",
+    "end_time": "2024-01-01T18:10:00Z",
+    "status": "failure",
+    "source_system": "database-secondary",
+    "backup_type": "database",
+    "metadata": {
+      "error": "Connection timeout"
+    }
+  }
+]
