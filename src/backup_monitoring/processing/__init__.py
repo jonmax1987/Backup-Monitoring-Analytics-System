@@ -11,6 +11,12 @@ from backup_monitoring.processing.models import (
     MonthlyMetrics,
     PeriodType,
 )
+from backup_monitoring.processing.comparison import (
+    HistoricalComparator,
+    ComparisonError,
+    PeriodComparison,
+    MetricDelta,
+)
 
 __all__ = [
     "ProcessingEngine",
@@ -20,4 +26,8 @@ __all__ = [
     "WeeklyMetrics",
     "MonthlyMetrics",
     "PeriodType",
+    "HistoricalComparator",
+    "ComparisonError",
+    "PeriodComparison",
+    "MetricDelta",
 ]

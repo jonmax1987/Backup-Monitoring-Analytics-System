@@ -43,6 +43,17 @@ The format follows Keep a Changelog principles.
 - Support for filtering by specific date/week/month (CORE-004)
 - compute_all_aggregates method for batch processing (CORE-004)
 - Comprehensive unit tests for processing engine (CORE-004)
+- Historical Comparison Module for period-to-period comparisons (CORE-005)
+- PeriodComparison model with delta calculations (CORE-005)
+- MetricDelta model for tracking changes in metrics (CORE-005)
+- Daily comparison (day vs day) (CORE-005)
+- Weekly comparison (week vs week) (CORE-005)
+- Monthly comparison (month vs month) with year boundary handling (CORE-005)
+- Absolute and percentage delta calculations (CORE-005)
+- Support for comparing multiple consecutive periods (CORE-005)
+- Handling of missing previous period data (CORE-005)
+- Zero value handling in percentage calculations (CORE-005)
+- Comprehensive unit tests for comparison module (CORE-005)
 
 ### Changed
 - Added jsonschema and pytz to requirements.txt (CORE-002)

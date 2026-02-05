@@ -11,7 +11,7 @@ Phase 1 – Core System Implementation
 | CORE-002 | JSON Data Loader | DONE | 2026-02-05 | JSON loader implemented with schema validation, timestamp normalization, comprehensive tests |
 | CORE-003 | Backup Classification Layer | DONE | 2026-02-05 | Rule-based classification system implemented with extensible YAML rules, multiple operators, comprehensive tests |
 | CORE-004 | Processing Engine | DONE | 2026-02-05 | Processing engine implemented with daily/weekly/monthly aggregates, duration calculations, status counting, comprehensive tests |
-| CORE-005 | Historical Comparison Module | TODO | — | — |
+| CORE-005 | Historical Comparison Module | DONE | 2026-02-05 | Historical comparison implemented with daily/weekly/monthly comparisons, delta calculations, comprehensive tests |
 | CORE-006 | Anomaly Detection Engine | TODO | — | — |
 | CORE-007 | Report Generator | TODO | — | — |
 | CORE-008 | Integration Layer | TODO | — | — |
